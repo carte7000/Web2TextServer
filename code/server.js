@@ -2,8 +2,9 @@ var express  = require('express');
 var Firebase = require('firebase');
 var FirebaseTokenGenerator = require("firebase-token-generator");
 var GCM = require('gcm').GCM;
+var config = require("./config.js");
 
-var apiKey = 'AIzaSyDMG4x7G71v8NCVlObsjBXu0O8-SLSTKk8';
+var apiKey = config.GCM_API_KEY;
 var gcm = new GCM(apiKey);
 var app = express();
 
@@ -19,10 +20,10 @@ app.get('/', function(req, res) {
   res.sendfile('./build/index.html');
 });
 
-var tokenGenerator = new FirebaseTokenGenerator("36rGPIywdkXJkY4ozzxkiF9LuPyvxZ9u5mPn26da");
+var tokenGenerator = new FirebaseTokenGenerator(config.FIREBASE_SECRET);
 var AUTH_TOKEN = tokenGenerator.createToken({uid: "admin1"},{admin:true});
 
-var ref = new Firebase('https://web2text.firebaseio.com/');
+var ref = new Firebase(config.FIREBASE_URL);
 ref.authWithCustomToken(AUTH_TOKEN, function(error, authData) {
 	if (error) {
 		console.log("Login Failed!", error);
