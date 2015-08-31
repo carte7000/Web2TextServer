@@ -1,0 +1,19 @@
+{
+  "name": "Web2TextServer",
+  "version": "0.0.0",
+  "authors": [
+    "carte7000 <simrob7000@gmail.com>"
+  ],
+  "description": "Send and read sms from any devices",
+  "main": "build/index.html",
+  "license": "No License",
+  "dependencies": {
+    "angular-route": "~1.4.4",
+    "angular-ui-router": "~0.2.15",
+    "angular": "~1.4.4",
+    "angularfire": "~1.1.2",
+    "firebase": "~2.2.9",
+    "cryptojslib": "~3.1.2"
+  },
+  "private": true
+}

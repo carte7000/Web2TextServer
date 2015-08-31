@@ -1,0 +1,45 @@
+{
+  "name": "Web2TextServer",
+  "version": "0.0.0",
+  "description": "Web server for Web2Text",
+  "main": "code/server.js",
+  "author": "Simon B.Robert",
+  "dependencies": {
+    "express": "~4.7.2",
+    "firebase": "latest",
+    "firebase-token-generator": "latest",
+    "gcm": "latest"
+  },
+  "devDependencies": {
+    "bower": "latest",
+    "browserify": "latest",
+    "browserify-shim": "^3.8.10",
+    "catw": "latest",
+    "less": "latest",
+    "watchify": "latest"
+  },
+  "scripts": {
+    "start": "node code/server.js",
+    "watch-css": "catw -c 'lessc -' 'src/css/main.less' -o build/statics/bundle.css -v",
+    "watch-js": "watchify src/js/main.js -o build/statics/bundle.js -dv",
+    "watch": "npm run watch-css & npm run watch-js",
+    "build-js": "browserify src/js/main.js -o build/statics/bundle.js",
+    "build-css": "lessc src/css/main.less build/statics/bundle.css",
+    "build": "npm run build-js && npm run build-css"
+  },
+  "browserify": {
+    "transform": [ "browserify-shim" ]
+  },
+  "browser": {
+    "angular": "./src/bower_modules/angular/angular.js",
+    "ngRoute": "./src/bower_modules/angular-route/angular-route.js",
+    "firebase": "./src/bower_modules/firebase/firebase.js",
+    "angularfire": "./src/bower_modules/angularfire/index.js",
+    "angular-ui-router": "./src/bower_modules/angular-ui-router/release/angular-ui-router.js"
+  },
+  "browserify-shim": {
+    "angular": {
+      "exports": "angular"
+    }
+  }
+}
