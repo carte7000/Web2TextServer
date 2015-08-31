@@ -1,0 +1,11 @@
+<content id="chat" class="limitToHeight block-level">
+	<div ng-repeat="message in messages" ng-class="{friend: message.senderNumber == conversationId}">
+		<span>{{decrypt(message.content)}}</span>
+	</div>
+	<a id="bottom" style="display:none"></a>
+</content>
+<chatcontrol>
+	<h3>Type your message here</h3>
+	<input class="textzone" ng-model="text" />
+	<button class="send" ng-click="send()">Send</button>
+</chatcontrol>

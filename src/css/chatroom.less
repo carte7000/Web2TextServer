@@ -1,0 +1,128 @@
+@light-gray: #ddd;
+@chatHeadHeight: 70px;
+@chatHeadFontSize: 42px;
+@chatHeadPadding: (@chatHeadHeight - @chatHeadFontSize) / 2;
+
+contact {
+	cursor:pointer;
+	width:100%;
+	background-color: @white;
+	display: block;
+	border-bottom: 1px @light-gray solid;
+	color:@black;
+	div {
+		padding:8%;
+		width:100% - 16%;
+		height:80px;
+
+		chat-head {
+			border-radius: 50%;
+			width:@chatHeadHeight;
+			height:@chatHeadHeight - @chatHeadPadding;
+			background-color: @light-gray;
+			display: inline-block;
+			font-size: @chatHeadFontSize;
+			padding:@chatHeadPadding 0 0 0;
+			text-align:center;
+		}
+
+		span {
+			margin-left: 20px;
+			display: inline-block;
+			position: relative;
+			top:-10px;
+			font-size: 18px;
+		}
+	}
+}
+
+.active {
+	background-color: @primary-color;
+	color:@white;
+}
+
+.side-column {
+	background-color: @light-gray;
+}
+
+content{
+	display: block;
+	background-color: @white;
+	border-right: solid 1px darken(@light-gray, 10%);
+	border-left: solid 1px darken(@light-gray, 10%);
+
+	div {
+		margin:15px 30px;
+		background-color: @light-gray;
+		padding: 20px;
+		border-radius: 5px;
+		width:50%;
+		clear:both;
+
+		float:right;
+
+		span {
+			float:right;
+		}
+	}
+
+	.me {
+		float:right;
+	}
+
+	.friend {
+		float:left;
+
+		span {
+			float:left;
+		}
+	}
+}
+
+section {
+	display: block;
+}
+ 
+section h3 {
+	color:@white;
+}
+
+input.textzone {
+	width:70%;
+	height:60px;
+	margin:20px;
+	paddin:20px;
+	border:1px @light-gray solid;
+	border-radius: 5px;
+	display: inline-block;
+}
+
+button.send {
+	width:20%;
+	height:60px;
+	margin:20px;
+	paddin:20px;
+	background-color: @primary-color;
+	border:darken(@primary-color, 10%) 1px solid;
+	color:@white;
+	font-size: 18px;
+
+}
+
+button.send:hover {
+	background-color: darken(@primary-color, 10%)
+}
+
+chatcontrol{
+	display: block;
+	width:100%;
+	padding:20px;
+	background-color: @black;
+}
+
+chatroom {
+	display: block;
+	width:100%;
+	height: 100%;
+	background-color: @black;
+}

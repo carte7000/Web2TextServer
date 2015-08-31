@@ -1,0 +1,18 @@
+<nav><title>Web2Text</title></nav>
+<chatroom>
+	<div class="columns normal-2 side-column">
+		<div class="limitToHeight block-level">
+			<contact ng-repeat="(key, conversation) in conversations">
+				<div ui-sref="contacts({contactid: key})" ng-click="select($index)" ng-class="{active: $index == selected}">
+					<chat-head><i class="fa fa-user"></i></chat-head><span ui-sref="contacts({contactid: key})">{{key}}</span>
+				</div>
+			</contact>
+		</div>
+	</div>
+	<div class="columns normal-6">
+		<section class="block-level" ui-view>
+		</section>
+	</div>
+	<div class="columns normal-2 side-column limitToHeight">
+	</div>
+</chatroom>
