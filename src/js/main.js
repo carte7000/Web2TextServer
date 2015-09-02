@@ -3,6 +3,7 @@ require("ngRoute");
 require("firebase");
 require("angularfire");
 require("angular-ui-router");
+var CryptographyStrategy = require("./AESCryptographyStrategy.js");
 
 var web2textApp = angular.module('web2text', ["ngRoute", "firebase", 'ui.router']);
 var loginId = null;
@@ -77,13 +78,13 @@ web2textApp.controller('chatBoxController', function($scope, $firebaseObject, $s
    $scope.text = "";
 
    $scope.decrypt = function(value){
-      return value;//CryptoJS.AES.decrypt(value, rootRef.getAuth().uid).toString(CryptoJS.enc.Utf8);
+      return CryptographyStrategy.decrypt(value, rootRef.getAuth().uid);//CryptoJS.AES.decrypt(value, rootRef.getAuth().uid).toString(CryptoJS.enc.Utf8);
    }
 
    $scope.send = function(){
-      var encryptedMessage = CryptoJS.AES.encrypt($scope.text, rootRef.getAuth().uid);
+      //var encryptedMessage = CryptoJS.AES.encrypt($scope.text, rootRef.getAuth().uid);
       userConversationsRef.push().set({
-        content: $scope.text,//encryptedMessage.toString(),
+        content: CryptographyStrategy.encrypt($scope.text, rootRef.getAuth().uid),
         receiverNumber:conversationId,
         sent_date: Firebase.ServerValue.TIMESTAMP,
         source: "web"
