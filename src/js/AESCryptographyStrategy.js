@@ -1,45 +1,25 @@
-var CryptoJS = require("CryptoJS");
+var AESCryptographyStrategy = function(pKey){
+    this.mKey = pKey;
 
-//var options = { iv: CryptoJS.PBKDF2("allo", "salt", { keySize: 128/32 }), mode: CryptoJS.mode.CBC, padding: CryptoJS.pad.Pkcs7 };
+    var CryptoJS = require("CryptoJS");
 
-var IV = "F27D5C9927726BCEFE7510B1BDD3D137";
+    var IV = "F27D5C9927726BCEFE7510B1BDD3D137";
 var SALT = "3FF2EC019C627B945225DEBAD71A01B6985FE84C95A70EB132882F88C0A59A55";
 var keySize = 128;
 var iterationCount = 2;
 
-var encryptAES = function(message, key){
-    var aesUtil = new AesUtil(keySize, iterationCount);
-    return aesUtil.encrypt(SALT, IV, key, message);
-}
+    var AesUtil = function(keySize, iterationCount) {
+      this.keySize = keySize / 32;
+      this.iterationCount = iterationCount;
+    };
 
-var decryptAES = function(encrypted, key){
-    var aesUtil = new AesUtil(keySize, iterationCount);
-    return aesUtil.decrypt(SALT, IV, key, encrypted);
-}
-
-
-/*var getKey = function(value){
-    return CryptoJS.PBKDF2(value, "salt", { keySize: 128/32 });//CryptoJS.PBKDF2(value, "test", { keySize: 128 });
-}*/
-
-
-var DESCryptographyStrategy = {
-    encrypt: encryptAES,
-    decrypt: decryptAES
-}
-
-var AesUtil = function(keySize, iterationCount) {
-  this.keySize = keySize / 32;
-  this.iterationCount = iterationCount;
-};
-
-AesUtil.prototype.generateKey = function(salt, passPhrase) {
-  var key = CryptoJS.PBKDF2(
-      passPhrase, 
-      CryptoJS.enc.Hex.parse(salt),
-      { keySize: this.keySize, iterations: this.iterationCount });
-  return key;
-}
+    AesUtil.prototype.generateKey = function(salt, passPhrase) {
+      var key = CryptoJS.PBKDF2(
+        passPhrase, 
+        CryptoJS.enc.Hex.parse(salt),
+        { keySize: this.keySize, iterations: this.iterationCount });
+      return key;
+    }
 
 AesUtil.prototype.encrypt = function(salt, iv, passPhrase, plainText) {
   var key = this.generateKey(salt, passPhrase);
@@ -61,5 +41,27 @@ AesUtil.prototype.decrypt = function(salt, iv, passPhrase, cipherText) {
       { iv: CryptoJS.enc.Hex.parse(iv) });
   return decrypted.toString(CryptoJS.enc.Utf8);
 }
+this.encryptAES = function(message, key){
+      var aesUtil = new AesUtil(keySize, iterationCount);
+      return aesUtil.encrypt(SALT, IV, key, message);
+    }
 
-module.exports = DESCryptographyStrategy;
+    this.decryptAES = function(encrypted, key){
+      var aesUtil = new AesUtil(keySize, iterationCount);
+      return aesUtil.decrypt(SALT, IV, key, encrypted);
+    }
+}
+
+AESCryptographyStrategy.prototype.encrypt = function(message){
+  var encryptedMessage = JSON.parse(JSON.stringify(message));;
+  encryptedMessage.content = this.encryptAES(encryptedMessage.content, this.mKey);
+  return encryptedMessage;
+}
+
+AESCryptographyStrategy.prototype.decrypt = function(encrypted){
+  var decryptedMessage = JSON.parse(JSON.stringify(encrypted));;
+  decryptedMessage.content = this.decryptAES(decryptedMessage.content, this.mKey);
+  return decryptedMessage;
+}
+
+module.exports = AESCryptographyStrategy;

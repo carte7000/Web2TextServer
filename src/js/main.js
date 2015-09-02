@@ -77,18 +77,20 @@ web2textApp.controller('chatBoxController', function($scope, $firebaseObject, $s
 
    $scope.text = "";
 
+   var cryptographyStrategy = new CryptographyStrategy(rootRef.getAuth().uid);
+
    $scope.decrypt = function(value){
-      return CryptographyStrategy.decrypt(value, rootRef.getAuth().uid);//CryptoJS.AES.decrypt(value, rootRef.getAuth().uid).toString(CryptoJS.enc.Utf8);
+      return cryptographyStrategy.decrypt(value);//CryptoJS.AES.decrypt(value, rootRef.getAuth().uid).toString(CryptoJS.enc.Utf8);
    }
 
    $scope.send = function(){
       //var encryptedMessage = CryptoJS.AES.encrypt($scope.text, rootRef.getAuth().uid);
-      userConversationsRef.push().set({
-        content: CryptographyStrategy.encrypt($scope.text, rootRef.getAuth().uid),
+      userConversationsRef.push().set(cryptographyStrategy.encrypt({
+        content: $scope.text,
         receiverNumber:conversationId,
         sent_date: Firebase.ServerValue.TIMESTAMP,
         source: "web"
-      });
+      }));
       $scope.text = "";  
     }
   }

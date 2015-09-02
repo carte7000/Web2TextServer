@@ -1,6 +1,6 @@
 <content id="chat" class="limitToHeight block-level">
 	<div ng-repeat="message in messages" ng-class="{friend: message.senderNumber == conversationId}">
-		<span>{{decrypt(message.content)}}</span>
+		<span>{{decrypt(message).content}}</span>
 	</div>
 	<a id="bottom" style="display:none"></a>
 </content>
