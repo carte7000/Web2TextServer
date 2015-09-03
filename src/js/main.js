@@ -100,11 +100,11 @@ web2textApp.config(['$routeProvider', '$stateProvider',
   		function($routeProvider, $stateProvider) {
     		$routeProvider.
       		when('/home', {
-        		templateUrl: '/partials/home.html',
+        		templateUrl: 'statics/partials/home.html',
         		controller: 'loginController'
       		}).
       		when('/chatroom', {
-      			templateUrl: '/partials/chatroom.html',
+      			templateUrl: 'statics/partials/chatroom.html',
         		controller: 'chatroomController'
       		}).
       		otherwise({
@@ -113,7 +113,7 @@ web2textApp.config(['$routeProvider', '$stateProvider',
 
           $stateProvider
             .state('contacts', {
-              templateUrl: '/partials/chatBox.html',
+              templateUrl: 'statics/partials/chatBox.html',
               params: {
                 contactid: null
               },
