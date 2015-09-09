@@ -8,7 +8,7 @@ var apiKey = config.GCM_API_KEY;
 var gcm = new GCM(apiKey);
 var app = express();
 
-var port = 1337;
+var port = process.env.PORT || 1337;
 
 app.listen(port, '0.0.0.0', function(){
 	console.log("Server started on port " + port);
