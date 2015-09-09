@@ -3,6 +3,7 @@ require("ngRoute");
 require("firebase");
 require("angularfire");
 require("angular-ui-router");
+var CryptographyStrategy = require("./AESCryptographyStrategy.js");
 
 var web2textApp = angular.module('web2text', ["ngRoute", "firebase", 'ui.router']);
 var loginId = null;
@@ -76,18 +77,20 @@ web2textApp.controller('chatBoxController', function($scope, $firebaseObject, $s
 
    $scope.text = "";
 
+   var cryptographyStrategy = new CryptographyStrategy(rootRef.getAuth().uid);
+
    $scope.decrypt = function(value){
-      return value;//CryptoJS.AES.decrypt(value, rootRef.getAuth().uid).toString(CryptoJS.enc.Utf8);
+      return cryptographyStrategy.decrypt(value);//CryptoJS.AES.decrypt(value, rootRef.getAuth().uid).toString(CryptoJS.enc.Utf8);
    }
 
    $scope.send = function(){
-      var encryptedMessage = CryptoJS.AES.encrypt($scope.text, rootRef.getAuth().uid);
-      userConversationsRef.push().set({
-        content: $scope.text,//encryptedMessage.toString(),
+      //var encryptedMessage = CryptoJS.AES.encrypt($scope.text, rootRef.getAuth().uid);
+      userConversationsRef.push().set(cryptographyStrategy.encrypt({
+        content: $scope.text,
         receiverNumber:conversationId,
         sent_date: Firebase.ServerValue.TIMESTAMP,
         source: "web"
-      });
+      }));
       $scope.text = "";  
     }
   }
@@ -97,11 +100,11 @@ web2textApp.config(['$routeProvider', '$stateProvider',
   		function($routeProvider, $stateProvider) {
     		$routeProvider.
       		when('/home', {
-        		templateUrl: '/partials/home.html',
+        		templateUrl: 'statics/partials/home.html',
         		controller: 'loginController'
       		}).
       		when('/chatroom', {
-      			templateUrl: '/partials/chatroom.html',
+      			templateUrl: 'statics/partials/chatroom.html',
         		controller: 'chatroomController'
       		}).
       		otherwise({
@@ -110,7 +113,7 @@ web2textApp.config(['$routeProvider', '$stateProvider',
 
           $stateProvider
             .state('contacts', {
-              templateUrl: '/partials/chatBox.html',
+              templateUrl: 'statics/partials/chatBox.html',
               params: {
                 contactid: null
               },

@@ -14,7 +14,7 @@ app.listen(port, '0.0.0.0', function(){
 	console.log("Server started on port " + port);
 });
 
-app.use(express.static('./build/statics'));
+app.use(express.static('./build'));
 
 app.get('/', function(req, res) {
   res.sendfile('./build/index.html');

@@ -24,6 +24,7 @@
     "watch-js": "watchify src/js/main.js -o build/statics/bundle.js -dv",
     "watch": "npm run watch-css & npm run watch-js",
     "build-js": "browserify src/js/main.js -o build/statics/bundle.js",
+    "build-cryptography-js": "browserify src/js/AESCryptographyStrategy.js -o cryptography-js.js",
     "build-css": "lessc src/css/main.less build/statics/bundle.css",
     "build": "npm run build-js && npm run build-css"
   },
@@ -35,7 +36,8 @@
     "ngRoute": "./src/bower_modules/angular-route/angular-route.js",
     "firebase": "./src/bower_modules/firebase/firebase.js",
     "angularfire": "./src/bower_modules/angularfire/index.js",
-    "angular-ui-router": "./src/bower_modules/angular-ui-router/release/angular-ui-router.js"
+    "angular-ui-router": "./src/bower_modules/angular-ui-router/release/angular-ui-router.js",
+    "CryptoJS": "./src/bower_modules/crypto-js/crypto-js.js"
   },
   "browserify-shim": {
     "angular": {
