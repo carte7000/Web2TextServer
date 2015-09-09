@@ -2,7 +2,7 @@ var express  = require('express');
 var Firebase = require('firebase');
 var FirebaseTokenGenerator = require("firebase-token-generator");
 var GCM = require('gcm').GCM;
-var config = require("./config.js");
+var config = require("./heroku_config.js");
 
 var apiKey = config.GCM_API_KEY;
 var gcm = new GCM(apiKey);
